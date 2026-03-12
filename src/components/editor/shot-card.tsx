@@ -72,6 +72,7 @@ export function ShotCard({
   const t = useTranslations();
   const getModelConfig = useModelStore((s) => s.getModelConfig);
   const [editPrompt, setEditPrompt] = useState(prompt);
+  const [editDuration, setEditDuration] = useState(duration);
   const [generatingFrames, setGeneratingFrames] = useState(false);
   const [generatingVideo, setGeneratingVideo] = useState(false);
   const [expanded, setExpanded] = useState(false);
@@ -84,6 +85,15 @@ export function ShotCard({
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ prompt: editPrompt }),
+    });
+  }
+
+  async function handleDurationChange(d: number) {
+    setEditDuration(d);
+    await apiFetch(`/api/projects/${projectId}/shots/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ duration: d }),
     });
   }
 
@@ -167,7 +177,19 @@ export function ShotCard({
           <div className="mt-1.5 flex items-center gap-3">
             <span className="flex items-center gap-1 text-xs text-[--text-muted]">
               <Clock className="h-3 w-3" />
-              {duration}s
+              <input
+                type="number"
+                min={5}
+                max={15}
+                value={editDuration}
+                onClick={(e) => e.stopPropagation()}
+                onChange={(e) => {
+                  const v = Math.min(15, Math.max(5, Number(e.target.value)));
+                  handleDurationChange(v);
+                }}
+                className="w-10 rounded border border-[--border-subtle] bg-white px-1 py-0.5 text-center text-[11px] font-medium text-[--text-primary] outline-none focus:border-primary/50"
+              />
+              <span className="text-[11px]">s</span>
             </span>
             {dialogues.length > 0 && (
               <span className="flex items-center gap-1 text-xs text-[--text-muted]">
@@ -343,6 +365,21 @@ export function ShotCard({
               <>
                 <InlineModelPicker capability="video" />
                 <VideoRatioPicker value={videoRatio} onChange={setVideoRatio} />
+                <div className="flex items-center gap-1.5 rounded-lg border border-[--border-subtle] bg-white px-2.5 py-1">
+                  <Clock className="h-3.5 w-3.5 text-[--text-muted]" />
+                  <input
+                    type="number"
+                    min={5}
+                    max={15}
+                    value={editDuration}
+                    onChange={(e) => {
+                      const v = Math.min(15, Math.max(5, Number(e.target.value)));
+                      handleDurationChange(v);
+                    }}
+                    className="w-10 bg-transparent text-center text-[11px] font-medium text-[--text-primary] outline-none"
+                  />
+                  <span className="text-[11px] text-[--text-muted]">s</span>
+                </div>
                 <Button
                   size="sm"
                   onClick={handleGenerateVideo}
