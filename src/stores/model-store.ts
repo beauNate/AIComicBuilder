@@ -188,7 +188,7 @@ export const useModelStore = create<ModelStore>()(
           const caps = (p.capabilities as string[]) ?? [];
           return { ...p, capability: caps[0] ?? "text" };
         });
-        return { ...currentState, ...ps, providers: migrated };
+        return { ...currentState, ...ps, providers: migrated as unknown as Provider[] };
       },
     }
   )
