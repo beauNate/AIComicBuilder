@@ -138,7 +138,7 @@ export function ScriptEditor() {
           placeholder={t("project.scriptIdeaPlaceholder")}
           rows={4}
           disabled={generating}
-          className={`min-h-[80px] max-h-[30vh] overflow-y-auto rounded-xl border-0 bg-transparent px-5 pb-4 font-mono text-sm leading-relaxed placeholder:text-[--text-muted] focus-visible:ring-0 ${
+          className={`h-[30vh] resize-none overflow-y-auto rounded-xl border-0 bg-transparent px-5 pb-4 font-mono text-sm leading-relaxed placeholder:text-[--text-muted] focus-visible:ring-0 ${
             generating ? "opacity-40" : ""
           }`}
         />
@@ -159,7 +159,7 @@ export function ScriptEditor() {
             onChange={(e) => updateScript(e.target.value)}
             rows={16}
             disabled={generating}
-            className={`min-h-[200px] max-h-[55vh] overflow-y-auto rounded-xl border-0 bg-transparent px-5 pb-4 font-mono text-sm leading-relaxed placeholder:text-[--text-muted] focus-visible:ring-0 ${
+            className={`h-[55vh] resize-none overflow-y-auto rounded-xl border-0 bg-transparent px-5 pb-4 font-mono text-sm leading-relaxed placeholder:text-[--text-muted] focus-visible:ring-0 ${
               generating ? "opacity-40" : ""
             }`}
           />
