@@ -23,6 +23,7 @@ interface KlingResponse<T> {
   data: T;
 }
 
+
 interface KlingTaskData {
   task_id: string;
   task_status: "submitted" | "processing" | "succeed" | "failed";
